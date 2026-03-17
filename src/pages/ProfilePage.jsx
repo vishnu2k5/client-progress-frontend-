@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getMe, updateProfile } from '../lib/api';
-import { setOrgLogo, setOrgName } from '../lib/storage';
-import { useToast } from '../components/Toast';
+import { getMe, updateProfile } from '../lib/api.js';
+import { setOrgLogo, setOrgName } from '../lib/storage.js';
+import { useToast } from '../components/Toast.jsx';
 
 export default function ProfilePage() {
   const navigate = useNavigate();

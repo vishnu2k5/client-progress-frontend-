@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { changePassword } from '../lib/api';
-import { useToast } from '../components/Toast';
+import { changePassword } from '../lib/api.js';
+import { useToast } from '../components/Toast.jsx';
 
 export default function ChangePasswordPage() {
   const navigate = useNavigate();

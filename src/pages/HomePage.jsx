@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { addClient, getAllProgress, getClients, getMe, setAuthFailureHandler } from '../lib/api';
-import { clearAuth, getOrgLogo, getOrgName, setOrgLogo, setOrgName } from '../lib/storage';
-import { useToast } from '../components/Toast';
+import { addClient, getAllProgress, getClients, getMe, setAuthFailureHandler } from '../lib/api.js';
+import { clearAuth, getOrgLogo, getOrgName, setOrgLogo, setOrgName } from '../lib/storage.js';
+import { useToast } from '../components/Toast.jsx';
 
 export default function HomePage() {
   const navigate = useNavigate();

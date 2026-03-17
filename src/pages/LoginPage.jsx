@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login, register } from '../lib/api';
-import { isAuthed, setOrgLogo, setOrgName, setToken } from '../lib/storage';
-import { useToast } from '../components/Toast';
+import { login, register } from '../lib/api.js';
+import { isAuthed, setOrgLogo, setOrgName, setToken } from '../lib/storage.js';
+import { useToast } from '../components/Toast.jsx';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

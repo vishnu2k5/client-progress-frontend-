@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deleteClient, getProgress, updateClient, updateProgress } from '../lib/api';
-import { useToast } from '../components/Toast';
+import { deleteClient, getProgress, updateClient, updateProgress } from '../lib/api.js';
+import { useToast } from '../components/Toast.jsx';
 
 const STAGES = [
   { key: 'Lead', label: 'Lead' },

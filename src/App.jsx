@@ -1,11 +1,11 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
-import HomePage from './pages/HomePage';
-import ProgressPage from './pages/ProgressPage';
-import ProfilePage from './pages/ProfilePage';
-import ChangePasswordPage from './pages/ChangePasswordPage';
-import { isAuthed } from './lib/storage';
+import LoginPage from './pages/LoginPage.jsx';
+import HomePage from './pages/HomePage.jsx';
+import ProgressPage from './pages/ProgressPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
+import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
+import { isAuthed } from './lib/storage.js';
 
 function ProtectedRoute({ children }) {
   return isAuthed() ? children : <Navigate to="/login" replace />;
