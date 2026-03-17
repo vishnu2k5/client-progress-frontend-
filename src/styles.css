@@ -164,6 +164,10 @@ textarea {
   background: var(--primary);
 }
 
+.auth-form .primary-btn {
+  margin-top: 14px;
+}
+
 .primary-btn.square {
   width: 40px;
   height: 40px;
@@ -433,7 +437,24 @@ body.light-mode .danger-btn {
 
 
 .profile-top {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
   text-align: center;
+}
+
+.profile-top .small-picker {
+  width: min(420px, 100%);
+  margin-top: 0;
+}
+
+.profile-email {
+  width: min(420px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--input);
+  padding: 10px 12px;
+  word-break: break-word;
 }
 
 .menu-link {

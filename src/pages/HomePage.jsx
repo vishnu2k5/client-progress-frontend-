@@ -50,11 +50,12 @@ export default function HomePage() {
         setOrgLogo(org.logo);
         setOrgLogoState(org.logo);
       }
-    } catch {
+    } catch (error) {
+      showToast(error.response?.data?.message || 'Error loading profile', 'error');
     } finally {
-      loadClients();
+      await loadClients();
     }
-  }, [loadClients]);
+  }, [loadClients, showToast]);
 
   useEffect(() => {
     setAuthFailureHandler(() => navigate('/login', { replace: true }));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getMe, updateProfile } from '../lib/api.js';
 import { setOrgLogo, setOrgName } from '../lib/storage.js';
@@ -15,6 +15,13 @@ export default function ProfilePage() {
   const [newLogo, setNewLogo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const previewLogo = useMemo(() => (newLogo ? URL.createObjectURL(newLogo) : null), [newLogo]);
+
+  useEffect(() => {
+    return () => {
+      if (previewLogo) URL.revokeObjectURL(previewLogo);
+    };
+  }, [previewLogo]);
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -52,6 +59,7 @@ export default function ProfilePage() {
       const org = res.data.organization;
       setProfile(org);
       setNewLogo(null);
+      setOrgNameState(org.organizationName || '');
       setOrgName(org.organizationName);
       if (org.logo) setOrgLogo(org.logo);
       showToast('Profile updated!');
@@ -73,8 +81,8 @@ export default function ProfilePage() {
       </header>
 
       <div className="card profile-top">
-        {newLogo ? (
-          <img src={URL.createObjectURL(newLogo)} alt="New logo" className="avatar" />
+        {previewLogo ? (
+          <img src={previewLogo} alt="New logo" className="avatar" />
         ) : profile?.logo ? (
           <img src={profile.logo} alt="Organization logo" className="avatar" />
         ) : (
@@ -84,7 +92,7 @@ export default function ProfilePage() {
           <input type="file" accept="image/*" onChange={(e) => setNewLogo(e.target.files?.[0] || null)} />
           <span>Tap photo to change logo</span>
         </label>
-        <div className="muted">{profile?.email}</div>
+        <div className="muted profile-email">{profile?.email}</div>
       </div>
 
       <div className="card section-stack">

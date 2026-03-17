@@ -1,18 +1,15 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [isDark] = useState(() => {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
-
   useEffect(() => {
-    document.body.classList.toggle('light-mode', !isDark);
-  }, [isDark]);
+    document.body.classList.add('light-mode');
+    return () => document.body.classList.remove('light-mode');
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ isDark }}>
+    <ThemeContext.Provider value={{ isDark: false }}>
       {children}
     </ThemeContext.Provider>
   );

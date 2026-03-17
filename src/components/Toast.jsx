@@ -1,15 +1,18 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 const ToastContext = createContext({ showToast: () => {} });
 
 export function ToastProvider({ children }) {
   const [toast, setToast] = useState(null);
+  const timerRef = useRef(null);
 
   const showToast = useCallback((message, type = 'success') => {
     setToast({ message, type });
-    window.clearTimeout(showToast._timer);
-    showToast._timer = window.setTimeout(() => setToast(null), 2200);
+    window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setToast(null), 2200);
   }, []);
+
+  useEffect(() => () => window.clearTimeout(timerRef.current), []);
 
   const value = useMemo(() => ({ showToast }), [showToast]);
 
