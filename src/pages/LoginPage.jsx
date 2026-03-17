@@ -93,7 +93,7 @@ export default function LoginPage() {
     <div className="page auth-page">
       <div className="auth-wrap card">
         <div className="auth-brand">
-          <div className="brand-icon">📊</div>
+          <img src="/logo.png" alt="Smarta Tech logo" className="brand-logo" />
           <h1>Smarta Tech</h1>
           <p>Tracker</p>
         </div>
