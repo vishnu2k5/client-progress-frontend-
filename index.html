@@ -2,9 +2,51 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Smarta Tracker" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>Smarta Tech Tracker</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/logo.png" />
+    <script>
+      (function addIosStartupImage() {
+        var ua = window.navigator.userAgent || '';
+        var isIos = /iPhone|iPad|iPod/i.test(ua);
+        if (!isIos) return;
+
+        var width = window.screen.width;
+        var height = window.screen.height;
+        var ratio = window.devicePixelRatio || 1;
+        var title = 'Smarta Tech Tracker';
+        var color = '#ffffff';
+        var text = '#1c1c1e';
+
+        var svg =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="' + width * ratio + '" height="' + height * ratio + '">' +
+          '<rect width="100%" height="100%" fill="' + color + '"/>' +
+          '<text x="50%" y="50%" fill="' + text + '" font-family="-apple-system,Segoe UI,sans-serif" font-size="' +
+          Math.max(40, Math.round((width * ratio) / 14)) +
+          '" text-anchor="middle" dominant-baseline="middle">' +
+          title +
+          '</text></svg>';
+
+        var href = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+        var link = document.createElement('link');
+        link.setAttribute('rel', 'apple-touch-startup-image');
+        link.setAttribute(
+          'media',
+          '(device-width: ' + width + 'px) and (device-height: ' + height + 'px) and (-webkit-device-pixel-ratio: ' + ratio + ')'
+        );
+        link.setAttribute('href', href);
+        document.head.appendChild(link);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
