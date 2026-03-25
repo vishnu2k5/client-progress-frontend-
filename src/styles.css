@@ -524,3 +524,21 @@ body.light-mode .danger-btn {
     transform: none;
   }
 }
+
+/* Red border */
+.danger-border {
+  border: 2px solid #ff4d4f;
+  border-radius: 12px;
+}
+
+/* Badge */
+.needs-update-badge {
+  margin-top: 6px;
+  display: inline-block;
+  background: #ffe5e5;
+  color: #ff4d4f;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}

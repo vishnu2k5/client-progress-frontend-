@@ -24,13 +24,22 @@ export default function HomePage() {
     try {
       const [clientsRes, progressRes] = await Promise.all([getClients(), getAllProgress()]);
       const deliveredMap = {};
+      const lastUpdatedMap = {};
       progressRes.data.forEach((entry) => {
         const id = entry.clientId?._id || entry.clientId;
         if (id) deliveredMap[id] = !!entry.delivered;
+
+        const updatedAt = new Date(entry.updatedAt);
+
+        // store latest update per client
+        if (!lastUpdatedMap[id] || updatedAt > lastUpdatedMap[id]) {
+          lastUpdatedMap[id] = updatedAt;
+        }
       });
-      setClients(clientsRes.data.map((entry) => ({ ...entry, delivered: deliveredMap[entry._id] || false })));
+      setClients(clientsRes.data.map((entry) => ({ ...entry, delivered: deliveredMap[entry._id] || false, lastUpdated: lastUpdatedMap[entry._id] || null })));
     } catch (error) {
       showToast(error.response?.data?.message || 'Error loading clients', 'error');
+      console.error('Error loading clients:', error);
     } finally {
       setLoading(false);
     }
@@ -128,21 +137,57 @@ export default function HomePage() {
         {filteredClients.length === 0 ? (
           <div className="card empty">No clients found</div>
         ) : (
-          filteredClients.map((item) => (
-            <Link to={`/progress/${item._id}`} state={{ clientName: item.clientName }} key={item._id} className="card client-item">
-              <div className="client-left">
-                <div className="client-icon">🏢</div>
-                <div>
-                  <div className="client-name">{item.clientName}</div>
-                  <div className="muted">Added {new Date(item.createdAt).toLocaleDateString()}</div>
+          filteredClients.map((item) => {
+            const days = item.lastUpdated
+              ? Math.floor(
+                (new Date() - new Date(item.lastUpdated)) /
+                (1000 * 60 * 60 * 24)
+              )
+              : null;
+
+            const needsUpdate = days !== null && days > 2;
+
+            return (
+              <Link
+                to={`/progress/${item._id}`}
+                state={{ clientName: item.clientName }}
+                key={item._id}
+                className={`card client-item ${needsUpdate ? "danger-border" : ""}`}
+              >
+                <div className="client-left">
+                  <div className="client-icon">🏢</div>
+                  <div>
+                    <div className="client-name">{item.clientName}</div>
+
+                    <div className="muted">
+                      Added {new Date(item.createdAt).toLocaleDateString()}
+                    </div>
+
+                    <div className="updated">
+                      {days === null
+                        ? "No updates yet"
+                        : days === 0
+                          ? "Updated today"
+                          : days === 1
+                            ? "Updated 1 day ago"
+                            : `Updated ${days} days ago`}
+                    </div>
+
+                    {needsUpdate && (
+                      <div className="needs-update-badge">
+                        ⚠ Needs update
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="client-right">
-                {item.delivered ? <span className="badge">✓</span> : null}
-                <span className="arrow">›</span>
-              </div>
-            </Link>
-          ))
+
+                <div className="client-right">
+                  {item.delivered ? <span className="badge">✓</span> : null}
+                  <span className="arrow">›</span>
+                </div>
+              </Link>
+            );
+          })
         )}
       </div>
     </div>
